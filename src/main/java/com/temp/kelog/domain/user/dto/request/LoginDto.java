@@ -8,15 +8,11 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class RegisterDTO {
-
-    @NotBlank()
-    private String username;
+public class LoginDto {
 
     @NotBlank()
     private String email;
 
     @NotBlank()
     private String password;
-
 }
