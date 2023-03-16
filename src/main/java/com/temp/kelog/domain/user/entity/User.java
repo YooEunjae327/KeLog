@@ -21,7 +21,7 @@ public class User {
     private Long id;
 
     @Column(name = "user_name")
-    private String userName;
+    private String username;
 
     @Column(name = "user_email", unique = true)
     @Size(max = 50)
@@ -41,5 +41,12 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Kelog> kelog = new ArrayList<Kelog>();
+
+    @Builder
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
 }

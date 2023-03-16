@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 public class RegisterDTO {
 
     @NotBlank()
-    private String userName;
+    private String username;
 
     @NotBlank()
     private String email;
