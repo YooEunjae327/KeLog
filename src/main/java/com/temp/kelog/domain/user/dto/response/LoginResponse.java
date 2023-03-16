@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class LoginResponce {
+public class LoginResponse {
 
     private String accessToken;
     private String refreshToken;

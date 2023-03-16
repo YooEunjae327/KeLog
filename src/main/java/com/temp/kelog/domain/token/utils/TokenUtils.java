@@ -36,7 +36,7 @@ public class TokenUtils {
                 .compact();
     }
 
-    public String savaRefreshToken(User user) {
+    public String saveRefreshToken(User user) {
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .setHeader(createHeader())
