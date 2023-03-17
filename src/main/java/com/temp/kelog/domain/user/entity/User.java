@@ -1,6 +1,7 @@
 package com.temp.kelog.domain.user.entity;
 
 import com.temp.kelog.domain.kelog.entity.Kelog;
+import com.temp.kelog.global.utils.BCryptUtils;
 import lombok.*;
 
 import javax.persistence.*;
@@ -46,7 +47,7 @@ public class User {
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        this.password = BCryptUtils.encrypt(password);
     }
 
 }

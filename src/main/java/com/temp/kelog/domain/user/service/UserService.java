@@ -6,52 +6,47 @@ import com.temp.kelog.domain.user.dto.response.LoginResponse;
 import com.temp.kelog.domain.user.entity.User;
 import com.temp.kelog.domain.user.repository.UserRepository;
 import com.temp.kelog.global.exception.CustomException;
-//import com.temp.kelog.global.exception.ExceptionType;
 import com.temp.kelog.global.exception.ExceptionType;
+import com.temp.kelog.global.utils.BCryptUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepositroy;
+    private final UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
 
     public void register(RegisterDto request) {
 
-//        if(userRepositroy.findByEmail(request.getEmail())) {
-//            throw new CustomException(ExceptionType.EMAIL_DUPLICATED);
-//        }
+        if(userRepository.existsByEmail(request.getEmail())) {
+            throw new CustomException(ExceptionType.EMAIL_DUPLICATED);
+        }
 
-        //String encodedPassword = passwordEncoder.encode(request.getPassword());
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
 
 
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
-                .password(encodedPassword)
+                .password(request.getPassword())
                 .build();
 
-        userRepositroy.save(user);
+        userRepository.save(user);
     }
 
-    public LoginResponse login(LoginDto request) {
+    public void login(LoginDto request) {
 
-        User user = userRepositroy.findByEmail(request.getEmail())
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
 
 
-        if(! passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new CustomException(ExceptionType.INVALID_PARAMETER);
-        }
-
+//        if(! passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+//            throw new CustomException(ExceptionType.INVALID_PARAMETER);
+//        }
 
 
     }
