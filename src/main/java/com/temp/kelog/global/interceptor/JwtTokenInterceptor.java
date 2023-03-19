@@ -28,10 +28,11 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
         }
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
+        log.info(String.valueOf(handlerMethod));
+        log.info(String.valueOf(handlerMethod.getMethod().isAnnotationPresent(AuthToken.class)));
         if (!handlerMethod.getMethod().isAnnotationPresent(AuthToken.class)) {
             return true;
         }
-
         String token = AuthorizationUtil.extract(request, "Bearer");
         if(token.equals("")) {
             throw new User.NotFoundException();

@@ -40,7 +40,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void login(LoginDto request) {
+    public LoginResponse login(LoginDto request) {
 
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
@@ -50,8 +50,9 @@ public class UserService {
             throw new CustomException(ExceptionType.INVALID_PARAMETER);
         }
 
-        String a = tokenProvider.generateToken(user.getEmail(), JwtAuth.ACCESS_TOKEN  );
+        String accessToken = tokenProvider.generateToken(user.getEmail(), JwtAuth.ACCESS_TOKEN  );
+        String refreshToken = tokenProvider.generateToken(user.getEmail(), JwtAuth.REFRESH_TOKEN);
 
-        System.out.println(a);
+        return new LoginResponse(accessToken,refreshToken);
     }
 }
