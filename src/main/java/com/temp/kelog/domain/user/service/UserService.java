@@ -20,6 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
 
 
+
     public void register(RegisterDto request) {
 
         if(userRepository.existsByEmail(request.getEmail())) {
@@ -37,16 +38,16 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void login(LoginDto request) {
-
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
-
-
-
-//        if(! passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+//    public void login(LoginDto request) {
+//
+//        User user = userRepository.findByEmail(request.getEmail())
+//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+//
+//
+//        if(! BCryptUtils.isMatch(request.getPassword(), user.getPassword())) {
 //            throw new CustomException(ExceptionType.INVALID_PARAMETER);
 //        }
+
 
 
     }

@@ -1,4 +1,0 @@
-jwt :
-  secret_key : "dgagwefwnjkefnw"
-  refresh_key : "bhjbwebfhjfbwfhebff"
-  DATA_KEY : "userid"
