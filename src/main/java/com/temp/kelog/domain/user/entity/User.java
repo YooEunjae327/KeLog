@@ -1,8 +1,10 @@
 package com.temp.kelog.domain.user.entity;
 
 import com.temp.kelog.domain.kelog.entity.Kelog;
+import com.temp.kelog.global.exception.BusinessException;
 import com.temp.kelog.global.utils.BCryptUtils;
 import lombok.*;
+import org.springframework.http.HttpStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -48,6 +50,30 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = BCryptUtils.encrypt(password);
+    }
+
+    public static class NotFoundException extends BusinessException {
+        public NotFoundException() {
+            super(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다.");
+        }
+    }
+
+    public static class UnAuthenticationException extends BusinessException {
+        public UnAuthenticationException() {
+            super(HttpStatus.UNAUTHORIZED, "토큰이 입력되지 않았습니다.");
+        }
+    }
+
+    public static class ForbiddenException extends BusinessException {
+        public ForbiddenException() {
+            super(HttpStatus.FORBIDDEN, "접근할 수 있는 권한이 없습니다.");
+        }
+    }
+
+    public static class AlreadyExistedException extends BusinessException {
+        public AlreadyExistedException() {
+            super(HttpStatus.CONFLICT, "이미 가입된 회원입니다.");
+        }
     }
 
 }

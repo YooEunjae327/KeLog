@@ -5,8 +5,10 @@ import com.temp.kelog.domain.user.dto.request.RegisterDto;
 import com.temp.kelog.domain.user.dto.response.LoginResponse;
 import com.temp.kelog.domain.user.entity.User;
 import com.temp.kelog.domain.user.repository.UserRepository;
+import com.temp.kelog.global.enums.JwtAuth;
 import com.temp.kelog.global.exception.CustomException;
 import com.temp.kelog.global.exception.ExceptionType;
+import com.temp.kelog.global.jwt.TokenProvider;
 import com.temp.kelog.global.utils.BCryptUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-
+    private final TokenProvider tokenProvider;
 
 
     public void register(RegisterDto request) {
@@ -38,17 +40,18 @@ public class UserService {
         userRepository.save(user);
     }
 
-//    public void login(LoginDto request) {
-//
-//        User user = userRepository.findByEmail(request.getEmail())
-//                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
-//
-//
-//        if(! BCryptUtils.isMatch(request.getPassword(), user.getPassword())) {
-//            throw new CustomException(ExceptionType.INVALID_PARAMETER);
-//        }
+    public void login(LoginDto request) {
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
 
+        if(! BCryptUtils.isMatch(request.getPassword(), user.getPassword())) {
+            throw new CustomException(ExceptionType.INVALID_PARAMETER);
+        }
 
+        String a = tokenProvider.generateToken(user.getEmail(), JwtAuth.ACCESS_TOKEN  );
+
+        System.out.println(a);
     }
 }

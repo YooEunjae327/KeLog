@@ -22,9 +22,9 @@ public class UserController {
     }
 
 
-//    @PostMapping("/login")
-//    public void login(@RequestBody @Valid LoginDto request) {
-//        return userService.login(request);
-//    }
+    @PostMapping("/login")
+    public void login(@RequestBody @Valid LoginDto request) {
+         userService.login(request);
+    }
 
 }
