@@ -1,5 +1,6 @@
 package com.temp.kelog.domain.user.service;
 
+import com.ibm.cuda.CudaException;
 import com.temp.kelog.domain.user.dto.request.LoginDto;
 import com.temp.kelog.domain.user.dto.request.RegisterDto;
 import com.temp.kelog.domain.user.dto.response.LoginResponse;
@@ -8,12 +9,15 @@ import com.temp.kelog.domain.user.repository.UserRepository;
 import com.temp.kelog.global.enums.JwtAuth;
 //import com.temp.kelog.global.exception.CustomException;
 //import com.temp.kelog.global.exception.ExceptionType;
+import com.temp.kelog.global.exception.CustomException;
+import com.temp.kelog.global.exception.ExceptionType;
 import com.temp.kelog.global.jwt.TokenProvider;
 import com.temp.kelog.global.utils.BCryptUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @Service
 @Transactional
@@ -28,7 +32,8 @@ public class UserService {
     public void register(RegisterDto request) {
 
         if(userRepository.existsByEmail(request.getEmail())) {
-            //throw new CustomException(HttpStatus.FORBIDDEN, ExceptionType.EMAIL_DUPLICATED);
+            //throw new User.ForbiddenException();
+            throw new CustomException(ExceptionType.UNKNOWN_EXCEPTION);
         }
 
 
@@ -56,5 +61,6 @@ public class UserService {
         String refreshToken = tokenProvider.generateToken(user.getEmail(), JwtAuth.REFRESH_TOKEN);
 
         return new LoginResponse(accessToken,refreshToken);
+
     }
 }

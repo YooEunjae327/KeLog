@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-    @ExceptionHandler(BusinessException.class)
+    @ExceptionHandler({BusinessException.class, CustomException.class})
     protected ResponseEntity<ExceptionDto> definedException(BusinessException e) {
         final ExceptionDto exceptionDto = ExceptionDto.builder()
                 .message(e.getMessage())

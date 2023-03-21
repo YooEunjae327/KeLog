@@ -67,9 +67,9 @@ public class TokenProvider {
     }
 
     public User validateToken(String token) {
-        return userRepository.findById(
+        return userRepository.findByEmail(
                         Long.valueOf(parseToken(token, JwtAuth.ACCESS_TOKEN)
-                                .get("userId")
+                                .get("user_email")
                                 .toString())
                 )
                 .orElseThrow(User.NotFoundException::new);
