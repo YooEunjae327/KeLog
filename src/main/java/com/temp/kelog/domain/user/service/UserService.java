@@ -6,11 +6,12 @@ import com.temp.kelog.domain.user.dto.response.LoginResponse;
 import com.temp.kelog.domain.user.entity.User;
 import com.temp.kelog.domain.user.repository.UserRepository;
 import com.temp.kelog.global.enums.JwtAuth;
-import com.temp.kelog.global.exception.CustomException;
-import com.temp.kelog.global.exception.ExceptionType;
+//import com.temp.kelog.global.exception.CustomException;
+//import com.temp.kelog.global.exception.ExceptionType;
 import com.temp.kelog.global.jwt.TokenProvider;
 import com.temp.kelog.global.utils.BCryptUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +24,11 @@ public class UserService {
     private final TokenProvider tokenProvider;
 
 
+
     public void register(RegisterDto request) {
 
         if(userRepository.existsByEmail(request.getEmail())) {
-            throw new CustomException(ExceptionType.EMAIL_DUPLICATED);
+            //throw new CustomException(HttpStatus.FORBIDDEN, ExceptionType.EMAIL_DUPLICATED);
         }
 
 
@@ -37,7 +39,7 @@ public class UserService {
                 .password(request.getPassword())
                 .build();
 
-        userRepository.save(user);
+         userRepository.save(user);
     }
 
     public LoginResponse login(LoginDto request) {
@@ -46,9 +48,9 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
 
-        if(! BCryptUtils.isMatch(request.getPassword(), user.getPassword())) {
-            throw new CustomException(ExceptionType.INVALID_PARAMETER);
-        }
+//        if(! BCryptUtils.isMatch(request.getPassword(), user.getPassword())) {
+//            throw new CustomException(ExceptionType.INVALID_PARAMETER);
+//        }
 
         String accessToken = tokenProvider.generateToken(user.getEmail(), JwtAuth.ACCESS_TOKEN  );
         String refreshToken = tokenProvider.generateToken(user.getEmail(), JwtAuth.REFRESH_TOKEN);

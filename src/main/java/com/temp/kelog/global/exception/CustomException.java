@@ -1,9 +1,10 @@
 package com.temp.kelog.global.exception;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
-public class CustomException  extends RuntimeException{
+public class CustomException extends RuntimeException{
 
     private final ExceptionType error;
 
