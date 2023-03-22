@@ -21,4 +21,5 @@ public class AppProperties {
 
     @Value("{app.client-secret}")
     private String clientSecret;
+
 }

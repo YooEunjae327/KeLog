@@ -8,4 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 public class CreateDto {
 
+    private String imag;
 }
