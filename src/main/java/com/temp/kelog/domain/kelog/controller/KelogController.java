@@ -19,8 +19,6 @@ public class KelogController {
 
     @AuthToken
     @GetMapping("test")
-    public void test(@RequestHeader HttpHeaders headers) {
-        log.info(String.valueOf(headers.getFirst("Authorization")));
-        log.info("truest");
+    public void test(@RequestHeader HttpHeaders headers ) {
     }
 }

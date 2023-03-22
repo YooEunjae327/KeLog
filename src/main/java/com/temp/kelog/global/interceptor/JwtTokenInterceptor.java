@@ -37,7 +37,6 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
             throw new User.NotFoundException();
         }
 
-        log.info(String.valueOf(token));
 
         User user = tokenProvider.validateToken(token);
         request.setAttribute("user", user);

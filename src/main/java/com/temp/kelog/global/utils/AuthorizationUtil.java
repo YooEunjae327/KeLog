@@ -19,7 +19,6 @@ public class AuthorizationUtil {
         while (headers.hasMoreElements()) {
             String value = headers.nextElement();
             if (value.toLowerCase().startsWith(type.toLowerCase())) {
-                log.info(value.substring(type.length()).trim());
                 return value.substring(type.length()).trim();
             }
         }

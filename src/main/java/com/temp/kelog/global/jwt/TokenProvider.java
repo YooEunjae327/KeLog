@@ -7,6 +7,7 @@ import com.temp.kelog.global.enums.JwtAuth;
 import com.temp.kelog.global.exception.BusinessException;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TokenProvider {
@@ -67,12 +69,14 @@ public class TokenProvider {
     }
 
     public User validateToken(String token) {
-        return userRepository.findByEmail(
-                        Long.valueOf(parseToken(token, JwtAuth.ACCESS_TOKEN)
-                                .get("user_email")
+        log.info(String.valueOf(parseToken(token, JwtAuth.ACCESS_TOKEN)));
+        return userRepository.findByEmail (
+                        String.valueOf(parseToken(token, JwtAuth.ACCESS_TOKEN)
+                                .get("userId")
                                 .toString())
                 )
                 .orElseThrow(User.NotFoundException::new);
+
     }
 
     public String refreshToken(String refreshToken) {
