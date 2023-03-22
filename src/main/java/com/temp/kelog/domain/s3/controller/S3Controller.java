@@ -17,6 +17,6 @@ public class S3Controller {
     @PostMapping()
     public void post(@RequestPart("file")MultipartFile multipartFile) {
         System.out.println(MultipartUtil.getLocalHomeDirectory());
-        //s3Service.post(multipartFile);
+        s3Service.post(multipartFile);
     }
 }

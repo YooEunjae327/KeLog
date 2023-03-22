@@ -12,7 +12,7 @@ public final class MultipartUtil {
      */
     public static String getLocalHomeDirectory() {
         String path = System.getProperty("user.home");
-        return path + "/Downloads/images";
+        return path + "/Downloads";
     }
 
     /**
