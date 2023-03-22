@@ -12,5 +12,7 @@ public class KelogService {
 
     private final KelogRepository kelogRepository;
 
-
+    public void allList() {
+        kelogRepository.findAll();
+    }
 }

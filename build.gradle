@@ -32,6 +32,9 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
+    //aws
+    'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
     implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
     // implementation 'org.springframework.boot:spring-boot-starter-security'
 }
