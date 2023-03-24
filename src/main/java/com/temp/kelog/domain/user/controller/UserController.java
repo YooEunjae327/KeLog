@@ -3,11 +3,17 @@ package com.temp.kelog.domain.user.controller;
 import com.temp.kelog.domain.user.dto.request.LoginDto;
 import com.temp.kelog.domain.user.dto.request.RegisterDto;
 import com.temp.kelog.domain.user.dto.response.LoginResponse;
+import com.temp.kelog.domain.user.entity.User;
 import com.temp.kelog.domain.user.service.UserService;
+import com.temp.kelog.global.annotations.AuthToken;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/user")
@@ -25,6 +31,14 @@ public class UserController {
     @PostMapping("/login")
     public LoginResponse login(@RequestBody @Valid LoginDto request) {
          return userService.login(request);
+    }
+
+    @AuthToken
+    @Transactional
+    @PostMapping("/{email}")
+    public void UserProfile(@RequestAttribute("user") String user ,  @PathVariable("email") String email ) {
+        System.out.println(user);
+        // userService.UserProfile(email);
     }
 
 }

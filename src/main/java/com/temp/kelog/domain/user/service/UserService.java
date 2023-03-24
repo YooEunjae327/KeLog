@@ -61,6 +61,9 @@ public class UserService {
         String refreshToken = tokenProvider.generateToken(user.getEmail(), JwtAuth.REFRESH_TOKEN);
 
         return new LoginResponse(accessToken,refreshToken);
+    }
+
+    public void UserProfile(String request) {
 
     }
 }
