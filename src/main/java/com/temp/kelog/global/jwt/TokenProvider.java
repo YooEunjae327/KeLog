@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -69,7 +70,7 @@ public class TokenProvider {
     }
 
     public User validateToken(String token) {
-        // log.info(String.valueOf(parseToken(token, JwtAuth.ACCESS_TOKEN)));
+        log.info("validate test");
         return userRepository.findByEmail (
                         String.valueOf(parseToken(token, JwtAuth.ACCESS_TOKEN)
                                 .get("userId")

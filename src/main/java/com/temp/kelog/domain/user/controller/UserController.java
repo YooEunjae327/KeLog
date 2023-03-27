@@ -34,10 +34,10 @@ public class UserController {
     }
 
     @AuthToken
-    @Transactional
     @PostMapping("/{email}")
-    public void UserProfile(@RequestAttribute("user") String user ,  @PathVariable("email") String email ) {
-        System.out.println(user);
+    public void UserProfile() {
+        System.out.println("text");
+        // System.out.println(user);
         // userService.UserProfile(email);
     }
 
