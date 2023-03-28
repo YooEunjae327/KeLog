@@ -52,6 +52,10 @@ public class User {
         this.password = BCryptUtils.encrypt(password);
     }
 
+    public static class NotFountPasswordException extends BusinessException {
+        public NotFountPasswordException() { super(HttpStatus.NOT_FOUND, "비밀번호가 다릅니다.");}
+    }
+
     public static class NotFoundException extends BusinessException {
         public NotFoundException() {
             super(HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다.");

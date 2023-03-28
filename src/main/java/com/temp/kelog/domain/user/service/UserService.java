@@ -1,14 +1,11 @@
 package com.temp.kelog.domain.user.service;
 
-import com.ibm.cuda.CudaException;
 import com.temp.kelog.domain.user.dto.request.LoginDto;
 import com.temp.kelog.domain.user.dto.request.RegisterDto;
 import com.temp.kelog.domain.user.dto.response.LoginResponse;
 import com.temp.kelog.domain.user.entity.User;
 import com.temp.kelog.domain.user.repository.UserRepository;
 import com.temp.kelog.global.enums.JwtAuth;
-//import com.temp.kelog.global.exception.CustomException;
-//import com.temp.kelog.global.exception.ExceptionType;
 import com.temp.kelog.global.exception.CustomException;
 import com.temp.kelog.global.exception.ExceptionType;
 import com.temp.kelog.global.jwt.TokenProvider;
@@ -32,8 +29,7 @@ public class UserService {
     public void register(RegisterDto request) {
 
         if(userRepository.existsByEmail(request.getEmail())) {
-            //throw new User.ForbiddenException();
-            throw new CustomException(ExceptionType.UNKNOWN_EXCEPTION);
+            throw new User.AlreadyExistedException();
         }
 
 
@@ -50,20 +46,20 @@ public class UserService {
     public LoginResponse login(LoginDto request) {
 
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+                .orElseThrow(User.NotFoundException::new);
 
 
-//        if(! BCryptUtils.isMatch(request.getPassword(), user.getPassword())) {
-//            throw new CustomException(ExceptionType.INVALID_PARAMETER);
-//        }
+        if(! BCryptUtils.isMatch(request.getPassword(), user.getPassword())) {
+            throw new User.NotFountPasswordException();
+        }
 
-        String accessToken = tokenProvider.generateToken(user.getEmail(), JwtAuth.ACCESS_TOKEN  );
+        String accessToken = tokenProvider.generateToken(user.getEmail(), JwtAuth.ACCESS_TOKEN);
         String refreshToken = tokenProvider.generateToken(user.getEmail(), JwtAuth.REFRESH_TOKEN);
 
         return new LoginResponse(accessToken,refreshToken);
     }
 
-    public void UserProfile(String request) {
+    public void UserProfile(User user,String request) {
 
     }
 }
