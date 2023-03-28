@@ -2,42 +2,41 @@ package com.temp.kelog.domain.user.service;
 
 import com.temp.kelog.domain.user.dto.request.LoginDto;
 import com.temp.kelog.domain.user.dto.request.RegisterDto;
+import com.temp.kelog.domain.user.dto.response.InfoResponse;
 import com.temp.kelog.domain.user.dto.response.LoginResponse;
 import com.temp.kelog.domain.user.entity.User;
+import com.temp.kelog.domain.user.entity.UserSocialInfo;
 import com.temp.kelog.domain.user.repository.UserRepository;
+import com.temp.kelog.domain.user.repository.UserSocialInfoRepository;
 import com.temp.kelog.global.enums.JwtAuth;
-import com.temp.kelog.global.exception.CustomException;
-import com.temp.kelog.global.exception.ExceptionType;
 import com.temp.kelog.global.jwt.TokenProvider;
 import com.temp.kelog.global.utils.BCryptUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestHeader;
+
+
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
 
+    private final UserSocialInfoRepository userSocialInfoRepository;
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
 
 
-
     public void register(RegisterDto request) {
-
         if(userRepository.existsByEmail(request.getEmail())) {
             throw new User.AlreadyExistedException();
         }
-
-
 
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(request.getPassword())
+                .userSocialInfo(createSocialInfo())
                 .build();
 
          userRepository.save(user);
@@ -59,7 +58,28 @@ public class UserService {
         return new LoginResponse(accessToken,refreshToken);
     }
 
-    public void UserProfile(User user,String request) {
+    public InfoResponse userProfile(User user) {
 
+
+//
+//        User user = userRepository.findByUsername(request)
+//                .orElseThrow(User.NotFoundException::new);
+
+
+        return InfoResponse.builder()
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .introduction(user.getIntroduction())
+                .build();
+    }
+
+    public void updateUserProfile(User user) {
+    }
+
+    public UserSocialInfo createSocialInfo() {
+        UserSocialInfo userSocialInfo = new UserSocialInfo();
+        userSocialInfoRepository.save(userSocialInfo);
+
+        return userSocialInfo;
     }
 }

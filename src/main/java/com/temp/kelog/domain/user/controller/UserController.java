@@ -2,6 +2,7 @@ package com.temp.kelog.domain.user.controller;
 
 import com.temp.kelog.domain.user.dto.request.LoginDto;
 import com.temp.kelog.domain.user.dto.request.RegisterDto;
+import com.temp.kelog.domain.user.dto.response.InfoResponse;
 import com.temp.kelog.domain.user.dto.response.LoginResponse;
 import com.temp.kelog.domain.user.entity.User;
 import com.temp.kelog.domain.user.service.UserService;
@@ -32,11 +33,17 @@ public class UserController {
          return userService.login(request);
     }
 
-    @AuthToken
-    @PostMapping("/{email}")
+    @PostMapping("/@{username}")
     @ResponseStatus(HttpStatus.OK)
-    public void UserProfile(@RequestAttribute User user, @PathVariable String email) {
-        userService.UserProfile(user, email);
+    public InfoResponse userProfile(@RequestAttribute User user ) {
+        return userService.userProfile(user);
+    }
+
+    @AuthToken
+    @PutMapping("/setting")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateUserProfile(@RequestAttribute User user) {
+        userService.updateUserProfile(user);
     }
 
 }

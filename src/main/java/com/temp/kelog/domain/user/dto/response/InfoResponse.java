@@ -1,18 +1,25 @@
 package com.temp.kelog.domain.user.dto.response;
 
+import com.temp.kelog.domain.user.entity.User;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Optional;
 
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class LoginResponse {
+@Builder
+public class InfoResponse {
 
     @NotBlank
-    private String accessToken;
+    private String username;
 
     @NotBlank
-    private String refreshToken;
+    private String email;
+
+    @NotBlank
+    private String introduction;
+
 }

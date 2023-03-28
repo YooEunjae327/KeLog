@@ -10,9 +10,9 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class LoginDto {
 
-    @NotBlank()
+    @NotBlank
     private String email;
 
-    @NotBlank()
+    @NotBlank
     private String password;
 }

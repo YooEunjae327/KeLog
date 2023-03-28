@@ -23,7 +23,7 @@ public class User {
     @Column(name = "user_id", nullable = false)
     private Long id;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", unique = true)
     private String username;
 
     @Column(name = "user_email", unique = true)
@@ -45,11 +45,16 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Kelog> kelog = new ArrayList<Kelog>();
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_social_info", referencedColumnName = "id")
+    private UserSocialInfo userSocialInfo;
+
     @Builder
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, UserSocialInfo userSocialInfo) {
         this.username = username;
         this.email = email;
         this.password = BCryptUtils.encrypt(password);
+        this.userSocialInfo = userSocialInfo;
     }
 
     public static class NotFountPasswordException extends BusinessException {

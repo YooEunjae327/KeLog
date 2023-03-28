@@ -10,13 +10,13 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class RegisterDto {
 
-    @NotBlank()
+    @NotBlank
     private String username;
 
-    @NotBlank()
+    @NotBlank
     private String email;
 
-    @NotBlank()
+    @NotBlank
     private String password;
 
 }
