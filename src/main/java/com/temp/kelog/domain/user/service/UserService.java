@@ -2,6 +2,7 @@ package com.temp.kelog.domain.user.service;
 
 import com.temp.kelog.domain.user.dto.request.LoginDto;
 import com.temp.kelog.domain.user.dto.request.RegisterDto;
+import com.temp.kelog.domain.user.dto.request.SettingDto;
 import com.temp.kelog.domain.user.dto.response.InfoResponse;
 import com.temp.kelog.domain.user.dto.response.LoginResponse;
 import com.temp.kelog.domain.user.entity.User;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 
 
 @Service
@@ -26,9 +28,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
 
+    private final EntityManager entityManager;
+
+
 
     public void register(RegisterDto request) {
         if(userRepository.existsByEmail(request.getEmail())) {
+            throw new User.AlreadyExistedException();
+        }
+
+        if(userRepository.existsByUsername(request.getUsername())) {
             throw new User.AlreadyExistedException();
         }
 
@@ -60,12 +69,6 @@ public class UserService {
 
     public InfoResponse userProfile(User user) {
 
-
-//
-//        User user = userRepository.findByUsername(request)
-//                .orElseThrow(User.NotFoundException::new);
-
-
         return InfoResponse.builder()
                 .username(user.getUsername())
                 .email(user.getEmail())
@@ -73,7 +76,10 @@ public class UserService {
                 .build();
     }
 
-    public void updateUserProfile(User user) {
+    public void updateUserProfile(User user, SettingDto settingDto) {
+        System.out.println(entityManager.getReference(User.class, user.getId()));
+        user.changeUserProfile(settingDto.getIntroduction(), settingDto.getInterest());
+        user.updateSocialInfo(settingDto.toSocialInfo());
     }
 
     public UserSocialInfo createSocialInfo() {

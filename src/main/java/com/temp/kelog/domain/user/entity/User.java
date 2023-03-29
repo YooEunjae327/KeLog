@@ -57,6 +57,18 @@ public class User {
         this.userSocialInfo = userSocialInfo;
     }
 
+    public void changeUserProfile(String introduction, String interest) {
+        this.introduction = introduction;
+        this.interest = interest;
+    }
+
+    public void updateSocialInfo(UserSocialInfo socialInfo) {
+        this.userSocialInfo.updateAll(
+                socialInfo.getGithub(), socialInfo.getTwitter(),
+                socialInfo.getFacebook(), socialInfo.getHomepage()
+        );
+    }
+
     public static class NotFountPasswordException extends BusinessException {
         public NotFountPasswordException() { super(HttpStatus.NOT_FOUND, "비밀번호가 다릅니다.");}
     }

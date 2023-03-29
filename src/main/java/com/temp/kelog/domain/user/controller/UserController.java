@@ -2,6 +2,7 @@ package com.temp.kelog.domain.user.controller;
 
 import com.temp.kelog.domain.user.dto.request.LoginDto;
 import com.temp.kelog.domain.user.dto.request.RegisterDto;
+import com.temp.kelog.domain.user.dto.request.SettingDto;
 import com.temp.kelog.domain.user.dto.response.InfoResponse;
 import com.temp.kelog.domain.user.dto.response.LoginResponse;
 import com.temp.kelog.domain.user.entity.User;
@@ -42,8 +43,8 @@ public class UserController {
     @AuthToken
     @PutMapping("/setting")
     @ResponseStatus(HttpStatus.OK)
-    public void updateUserProfile(@RequestAttribute User user) {
-        userService.updateUserProfile(user);
+    public void updateUserProfile(@RequestAttribute User user, SettingDto request) {
+        userService.updateUserProfile(user, request);
     }
 
 }
