@@ -1,5 +1,7 @@
 package com.temp.kelog.domain.user.service;
 
+import com.temp.kelog.domain.s3.dto.S3Dto;
+import com.temp.kelog.domain.s3.service.Storage.AmazonS3ResourceStorage;
 import com.temp.kelog.domain.user.dto.request.LoginDto;
 import com.temp.kelog.domain.user.dto.request.RegisterDto;
 import com.temp.kelog.domain.user.dto.request.SettingDto;
@@ -15,6 +17,7 @@ import com.temp.kelog.global.utils.BCryptUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 
@@ -30,7 +33,7 @@ public class UserService {
 
     private final EntityManager entityManager;
 
-
+    private final AmazonS3ResourceStorage amazonS3ResourceStorage;
 
     public void register(RegisterDto request) {
         if(userRepository.existsByEmail(request.getEmail())) {
@@ -85,6 +88,16 @@ public class UserService {
         userRepository.save(user);
         userSocialInfoRepository.save(user.getUserSocialInfo());
 
+    }
+
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
+
+    public void post(MultipartFile multipartFile) {
+        S3Dto s3Dto = S3Dto.multipartOf(multipartFile);
+        amazonS3ResourceStorage.store(s3Dto.getPath(), multipartFile);
     }
 
     public UserSocialInfo createSocialInfo() {

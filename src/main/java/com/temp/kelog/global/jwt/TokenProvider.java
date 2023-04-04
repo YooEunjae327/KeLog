@@ -70,7 +70,6 @@ public class TokenProvider {
     }
 
     public User validateToken(String token) {
-        log.info("validate test");
         return userRepository.findByEmail (
                         String.valueOf(parseToken(token, JwtAuth.ACCESS_TOKEN)
                                 .get("userId")
