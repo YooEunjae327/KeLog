@@ -1,9 +1,8 @@
 package com.temp.kelog.domain.user.service;
 
-import com.temp.kelog.domain.s3.dto.S3Dto;
-import com.temp.kelog.domain.s3.service.Storage.AmazonS3ResourceStorage;
 import com.temp.kelog.domain.user.dto.request.LoginDto;
 import com.temp.kelog.domain.user.dto.request.RegisterDto;
+import com.temp.kelog.domain.user.dto.request.S3Dto;
 import com.temp.kelog.domain.user.dto.request.SettingDto;
 import com.temp.kelog.domain.user.dto.response.InfoResponse;
 import com.temp.kelog.domain.user.dto.response.LoginResponse;
@@ -13,6 +12,7 @@ import com.temp.kelog.domain.user.repository.UserRepository;
 import com.temp.kelog.domain.user.repository.UserSocialInfoRepository;
 import com.temp.kelog.global.enums.JwtAuth;
 import com.temp.kelog.global.jwt.TokenProvider;
+import com.temp.kelog.global.s3.AmazonS3ResourceStorage;
 import com.temp.kelog.global.utils.BCryptUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -97,7 +97,8 @@ public class UserService {
 
     public void post(MultipartFile multipartFile) {
         S3Dto s3Dto = S3Dto.multipartOf(multipartFile);
-        amazonS3ResourceStorage.store(s3Dto.getPath(), multipartFile);
+        System.out.println(s3Dto.getId());
+        //amazonS3ResourceStorage.store(s3Dto.getPath(), multipartFile);
     }
 
     public UserSocialInfo createSocialInfo() {

@@ -1,6 +1,5 @@
 package com.temp.kelog.domain.user.controller;
 
-import com.temp.kelog.domain.s3.util.MultipartUtil;
 import com.temp.kelog.domain.user.dto.request.LoginDto;
 import com.temp.kelog.domain.user.dto.request.RegisterDto;
 import com.temp.kelog.domain.user.dto.request.SettingDto;
@@ -9,12 +8,15 @@ import com.temp.kelog.domain.user.dto.response.LoginResponse;
 import com.temp.kelog.domain.user.entity.User;
 import com.temp.kelog.domain.user.service.UserService;
 import com.temp.kelog.global.annotations.AuthToken;
+import com.temp.kelog.global.utils.MultipartUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -56,6 +58,7 @@ public class UserController {
         userService.updateUserProfile(user, request);
     }
 
+
     @AuthToken
     @DeleteMapping("/setting")
     @ResponseStatus(HttpStatus.OK)
@@ -64,7 +67,8 @@ public class UserController {
     }
 
     @PostMapping("/testing")
-    public void post(@RequestPart("file") MultipartFile multipartFile) {
+    public void post(@RequestPart("file") MultipartFile multipartFile, @RequestParam Map<String, String > request) {
+        //System.out.println(request.);
         System.out.println(MultipartUtil.getLocalHomeDirectory());
         userService.post(multipartFile);
     }

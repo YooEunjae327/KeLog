@@ -1,6 +1,6 @@
 package com.temp.kelog.domain.user.dto.request;
 
-import com.temp.kelog.domain.s3.util.MultipartUtil;
+import com.temp.kelog.global.utils.MultipartUtil;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,10 +22,10 @@ public class S3Dto {
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public static com.temp.kelog.domain.s3.dto.S3Dto multipartOf(MultipartFile multipartFile) {
+    public static S3Dto multipartOf(MultipartFile multipartFile) {
         final String fileId = MultipartUtil.createFileId();
         final String format = MultipartUtil.getFormat(multipartFile.getContentType());
-        return com.temp.kelog.domain.s3.dto.S3Dto.builder()
+        return S3Dto.builder()
                 .id(fileId)
                 .name(multipartFile.getOriginalFilename())
                 .format(format)

@@ -17,19 +17,12 @@ public class KelogController {
 
     private final KelogService kelogService;
 
-    private final UserRepository userRepository;
 
-    @AuthToken
-    @GetMapping("test")
-    public void test(@RequestAttribute User user) {
-        System.out.println(user.getEmail());
-    }
+
 
     @GetMapping()
     public void allList() {
         kelogService.allList();
     }
 
-//    @AuthToken
-//    @PostMapping()
 }
