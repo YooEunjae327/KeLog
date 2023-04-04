@@ -43,7 +43,7 @@ public class UserController {
     @AuthToken
     @PutMapping("/setting")
     @ResponseStatus(HttpStatus.OK)
-    public void updateUserProfile(@RequestAttribute User user, SettingDto request) {
+    public void updateUserProfile(@RequestAttribute User user, @RequestBody @Valid SettingDto request) {
         userService.updateUserProfile(user, request);
     }
 

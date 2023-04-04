@@ -77,10 +77,14 @@ public class UserService {
     }
 
     public void updateUserProfile(User user, SettingDto settingDto) {
-        System.out.println(entityManager.getReference(User.class, user.getId()));
-        // TODO 영속성 유지시켜서 dirty-check 하면 손쉽게 됨
+
         user.changeUserProfile(settingDto.getIntroduction(), settingDto.getInterest());
         user.updateSocialInfo(settingDto.toSocialInfo());
+
+
+        userRepository.save(user);
+        userSocialInfoRepository.save(user.getUserSocialInfo());
+
     }
 
     public UserSocialInfo createSocialInfo() {
