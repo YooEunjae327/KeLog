@@ -1,10 +1,7 @@
 package com.temp.kelog.domain.kelog.entity;
 
 import com.temp.kelog.domain.user.entity.User;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -36,5 +33,11 @@ public class Kelog {
     @JoinColumn(name = "user_id")
     private User user;
 
-
+    @Builder
+    public  Kelog(String title, String image, String content, User user) {
+        this.title = title;
+        this.image = image;
+        this.content = content;
+        this.user = user;
+    }
 }

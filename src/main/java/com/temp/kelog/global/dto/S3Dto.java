@@ -1,4 +1,4 @@
-package com.temp.kelog.domain.user.dto.request;
+package com.temp.kelog.global.dto;
 
 import com.temp.kelog.global.utils.MultipartUtil;
 import lombok.*;

@@ -2,7 +2,7 @@ package com.temp.kelog.domain.user.service;
 
 import com.temp.kelog.domain.user.dto.request.LoginDto;
 import com.temp.kelog.domain.user.dto.request.RegisterDto;
-import com.temp.kelog.domain.user.dto.request.S3Dto;
+import com.temp.kelog.global.dto.S3Dto;
 import com.temp.kelog.domain.user.dto.request.SettingDto;
 import com.temp.kelog.domain.user.dto.response.InfoResponse;
 import com.temp.kelog.domain.user.dto.response.LoginResponse;
@@ -97,8 +97,7 @@ public class UserService {
 
     public void post(MultipartFile multipartFile) {
         S3Dto s3Dto = S3Dto.multipartOf(multipartFile);
-        System.out.println(s3Dto.getId());
-        //amazonS3ResourceStorage.store(s3Dto.getPath(), multipartFile);
+        amazonS3ResourceStorage.store(s3Dto.getPath(), multipartFile);
     }
 
     public UserSocialInfo createSocialInfo() {
